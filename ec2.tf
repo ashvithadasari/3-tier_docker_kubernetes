@@ -21,6 +21,13 @@ resource "aws_instance" "myappec2" {
   tags = {
     Name = var.ec2name
   }
+  connection {
+  type        = "ssh"
+  user        = "ubuntu"
+  private_key = file(var.ssh_key_name)
+  host        = self.public_ip
+  timeout     = "4m"
+}
 
 provisioner "remote-exec" {
     inline = [
