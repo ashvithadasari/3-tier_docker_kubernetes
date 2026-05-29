@@ -13,4 +13,6 @@ variable "rds" {}
 variable "ec2name" {}
 variable "ssh_key_name1" {}
 variable "ssh_key_name" {}
-
+variable "dbname" {}
+variable "username" {}
+variable "dbpassword" {}

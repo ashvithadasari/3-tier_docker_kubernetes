@@ -1,7 +1,4 @@
 
-
-
-
 resource "aws_instance" "myappec2" {
 
   ami           = "ami-07a00cf47dbbc844c"
@@ -24,8 +21,34 @@ resource "aws_instance" "myappec2" {
   tags = {
     Name = var.ec2name
   }
-}
 
+provisioner "remote-exec" {
+    inline = [
+
+      # Update packages
+      "sudo apt update -y",
+
+      # Install Git
+      "sudo apt install git -y",
+
+      # Install AWS CLI
+      "curl \"https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip\" -o \"awscliv2.zip\"",
+      "sudo apt install unzip -y",
+      "unzip awscliv2.zip",
+      "sudo ./aws/install",
+
+      # Install kubectl
+      "curl -LO \"https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl\"",
+      "chmod +x kubectl",
+      "sudo mv kubectl /usr/local/bin/",
+
+      # Verify installations
+      "git --version",
+      "aws --version",
+      "kubectl version --client"
+    ]
+  }
+}
 
 
 

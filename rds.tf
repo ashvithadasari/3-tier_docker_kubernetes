@@ -21,9 +21,9 @@ resource "aws_db_instance" "mysql" {
   allocated_storage = 20
   storage_type      = "gp2"
 
-  db_name  = "hospitaldb"
-  username = "admin"
-  password = "Ashvitha123"
+  db_name  = var.dbname
+  username = var.username
+  password = var.dbpassword
 
   publicly_accessible = false
 
